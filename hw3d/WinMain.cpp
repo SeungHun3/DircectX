@@ -6,6 +6,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CLOSE:
 		PostQuitMessage(69); // 있어야 x를 누를때 프로그램이 종료된다
+	case WM_KEYDOWN:
+		if (wParam == 'F') // F 키를 눌렀을때
+		{
+			SetWindowText(hWnd, L"Key F Down");
+		}
+		break;
+	case WM_KEYUP:
+		if (wParam == 'F') // F 키를 뗏을때
+		{
+			SetWindowText(hWnd, L"Key F Up");
+		}
+		break;
+
 	default:
 		break;
 	}
@@ -53,9 +66,8 @@ int CALLBACK WinMain(
 
 	//메세지 
 	MSG msg;
-	BOOL gResult;
 
-	while ((gResult==GetMessage(&msg, nullptr, 0, 0) > 0)) // 필터하지 않은 메세지를 가져와서
+	while (GetMessage(&msg, nullptr, 0, 0)) // 필터하지 않은 메세지를 가져와서
 	{
 		//해석하고
 		TranslateMessage(&msg);
@@ -65,14 +77,6 @@ int CALLBACK WinMain(
 		//==> 윈도우가 지속적으로 입력, 마우스 등의 이벤트를 받게 해야 화면을 컨트롤 할 수가 있음
 	}
 
-	if (gResult == -1)
-	{
-		return -1;
-	}
-	else
-	{
-		return msg.wParam;
-	}
 
 	return 0;
 }
